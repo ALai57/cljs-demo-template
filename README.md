@@ -1,10 +1,12 @@
 # cljs-demo
 
-A Leiningen template for FIXME.
+A Leiningen template for a CLJS demo.
 
 ## Usage
 
-FIXME
+This demo app includes a CLJ webserver and two simple CLJS apps:  
+- CLJS simple app  
+- Reframe SPA  
 
 ## License
 
