@@ -6,9 +6,16 @@
 
 (defn cljs-demo
   "FIXME: write documentation"
-  [name]
-  (let [data {:name name
-              :sanitized (name-to-path name)}]
+  [name & output-level]
+  (let [full-output? (if (= "full" (first output-level)) true false)
+        _ (if full-output?
+            (println "Generating full output::")
+            (println "Generating skeleton::"))
+
+        data {:name name
+              :sanitized (name-to-path name)
+              :full-output? full-output? }]
+
     (main/info "Generating fresh 'lein new' cljs-demo project.")
     (->files data
              ;; Project definitions and readme

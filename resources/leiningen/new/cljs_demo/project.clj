@@ -1,5 +1,5 @@
 (defproject cljs-demo "0.0.1"
-  :description "A demo app showing how CLJS works"
+  :description "A demo app showing how CLJS works:: {{#full-output?}}Full output mode{{/full-output?}}{{^full-output?}}Skeleton mode{{/full-output?}}"
   :dependencies [[cheshire "5.8.1"]
                  [clj-http "3.9.1"]
                  [coreagile/defenv "1.0.2"]
@@ -27,63 +27,73 @@
                  [sablono "0.7.4"]
                  ]
 
-  :plugins [[lein-figwheel "0.5.18"]
-            [lein-cljsbuild "1.1.7"]]
+  :plugins {{#full-output?}}[[lein-figwheel "0.5.18"]
+                             [lein-cljsbuild "1.1.7"]]{{/full-output?}}{{^full-output?}}[]{{/full-output?}}
+
 
   ;; Used to make this compatible with Java 11
   :managed-dependencies [[org.clojure/core.rrb-vector "0.0.13"]
                          [org.flatland/ordered "1.5.7"]]
 
-  :ring {:handler clj.handler/app
-         :init clj.handler/init-routes}
+  ;; Server setup
+  :ring {:handler {{#full-output?}}clj.handler/app{{/full-output?}}
+         :init {{#full-output?}}clj.handler/init-routes{{/full-output?}}}
+
+  ;; Compilation
   :aot :all
   :uberjar-name "cljs-demo.jar"
   :main clj.handler
-  :figwheel {:ring-handler clj.handler/app
-             :css-dirs ["resources/public/css"]}
+
+  ;; Partial setup for interactive development
+  :figwheel {:ring-handler {{#full-output?}}clj.handler/app{{/full-output?}}
+             :css-dirs ["{{#full-output?}}resources/public/css{{/full-output?}}"]}
   :clean-targets ^{:protect false} ["resources/public/js" "target"]
+
+  ;; Compilation/build for CLJS
   :cljsbuild
   {:builds
    {
     :dev {:source-paths ["src/cljs"]
-          :figwheel {:open-urls ["http://localhost:3449/example"]}
-          :compiler {:main cljs_demo.example
-                     :asset-path "js/compiled/out"
-                     :output-to "resources/public/js/compiled/example.js"
-                     :output-dir "resources/public/js/compiled/out"
+          :figwheel {:open-urls [{{#full-output?}}"http://localhost:3449/example"{{/full-output?}}]}
+          :compiler {:main {{#full-output?}}cljs_demo.example{{/full-output?}}
+                     :asset-path "js/{{#full-output?}}compiled/out{{/full-output?}}"
+                     :output-to "resources/public/js/{{#full-output?}}compiled/example.js{{/full-output?}}"
+                     :output-dir "resources/public/js/{{#full-output?}}compiled/out{{/full-output?}}"
                      :source-map-timestamp true
-                     :npm-deps {:capitalize "2.0.0"}
+                     :npm-deps {{#full-output?}}{:capitalize "2.0.0"}{{/full-output?}}
                      :install-deps true}}
 
     :reframe {:source-paths ["src/cljs_reframe"]
               :figwheel {:open-urls ["http://localhost:3449/reframe"]
                          :on-jsload "cljs_reframe.core/main"}
-              :compiler {:main cljs_reframe.core
-                         :asset-path "js/compiled/out_cljs_reframe"
+              :compiler {:main {{#full-output?}}cljs_reframe.core{{/full-output?}}
+                         :asset-path "js/{{#full-output?}}compiled/out_cljs_reframe{{/full-output?}}"
                          :output-to
-                         "resources/public/js/compiled/cljs_reframe.js"
+                         "resources/public/js/{{#full-output?}}compiled/cljs_reframe.js{{/full-output?}}"
                          :output-dir
-                         "resources/public/js/compiled/out_cljs_reframe"
+                         "resources/public/js/{{#full-output?}}compiled/out_cljs_reframe{{/full-output?}}"
                          :source-map true
                          :source-map-timestamp true}}}
 
    }
+
+  ;; Profiles - handy for switching between CLJS projects
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.10"]
-                                  [figwheel-sidecar "0.5.18"]
-                                  [cider/piggieback "0.4.1"]]
+                                  {{#full-output?}}[figwheel-sidecar "0.5.18"]
+                                  [cider/piggieback "0.4.1"]{{/full-output?}}]
                    :source-paths ["src/cljs"]
                    :repl-options {:nrepl-middleware
-                                  [cider.piggieback/wrap-cljs-repl]}
+                                  [{{#full-output?}}cider.piggieback/wrap-cljs-repl{{/full-output?}}]}
                    :plugins [[lein-ancient "0.6.15"]
                              [lein-bikeshed "0.5.2"]
                              [lein-kibit "0.1.6"]
                              [lein-ring "0.12.5"]]}
              :reframe {:dependencies [[binaryage/devtools "0.9.10"]
-                                      [figwheel-sidecar "0.5.18"]
-                                      [cider/piggieback "0.4.1"]]
+                                      {{#full-output?}}[figwheel-sidecar "0.5.18"]
+                                      [cider/piggieback "0.4.1"]{{/full-output?}}]
                        :source-paths ["src/cljs_reframe"]
                        :repl-options {:nrepl-middleware
-                                      [cider.piggieback/wrap-cljs-repl]}
+                                      [{{#full-output?}}cider.piggieback/wrap-cljs-repl{{/full-output?}}]}
                        :plugins [[lein-ancient "0.6.15"]
                                  [lein-bikeshed "0.5.2"]
                                  [lein-kibit "0.1.6"]
