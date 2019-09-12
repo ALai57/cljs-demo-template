@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Reframe Todomvc</title>
-    <link rel="stylesheet" href="css/todos.css">
+    {{#full-output?}}<link rel="stylesheet" href="css/todos.css">{{/full-output?}}
   </head>
   <body>
-    <div id="app">
-    </div>
+    <div id="app"></div>
+    {{#full-output?}}
     <script src="js/compiled/cljs_reframe.js"></script>
     <script>
         window.onload = function () {
             cljs_reframe.core.main();
         }
     </script>
+    {{/full-output?}}
   </body>
 </html>
