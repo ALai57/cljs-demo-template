@@ -12,6 +12,8 @@ This demo app includes a CLJ webserver and two simple CLJS apps:
 - clone this repo   `git clone git@github.com:ALai57/cljs-demo-template.git`  
 - cd to the newly cloned repo `cd cljs-demo-template`  
 - run the command `lein new cljs-demo myproject`  
+- glance through the new directory `cljs-demo-template/myproject`  
+- If you have a project.clj that's got some missing stuff, you're good to go!
 
 
 ## Still to do  
