@@ -1,17 +1,17 @@
-(ns cljs-demo.example
-  (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [ajax.core :refer [GET POST]]
-            [cljs-http.client :as http]
-            [cljs.core.async :refer [<!]]
-            [reagent.core :as reagent]
-            [sablono.core :as sab]))
+(ns {{name}}.example
+    (:require-macros [cljs.core.async.macros :refer [go]])
+    (:require [ajax.core :refer [GET POST]]
+              [cljs-http.client :as http]
+              [cljs.core.async :refer [<!]]
+              [reagent.core :as reagent]
+              [sablono.core :as sab]))
 
 (.log js/console (str "----------------------\n"
                       "Starting App!"
                       "\n----------------------\n"))
 
 
-
+{{#full-output?}}
 (def table-data (reagent/atom ^{:key :asdf} []))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -90,6 +90,21 @@
         (table-entry {:width "10%"} :error_plaid person)
         (table-entry {:width "10%"} :success person)
         (table-entry {:width "30%"} :last_status_change person)])]]])
+{{/full-output?}}
+
+{{^full-output?}}
+(defn table []
+  [:div.container
+   [:table.table.table-sm.table-striped
+    [:tr.d
+     [:th.text-center "Name"]
+     [:th.text-center "Role"]
+     [:th.text-center ""]]
+    [:tbody
+     [:tr.d
+      [:td.text-entry "Andrew!"]
+      [:td.text-entry "Software Engineer"]]]]])
+{{/full-output?}}
 
 (defn main []
   (reagent/render [table]

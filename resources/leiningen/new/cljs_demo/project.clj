@@ -1,4 +1,4 @@
-(defproject cljs-demo "0.0.1"
+(defproject {{name}} "0.0.1"
   :description "A demo app showing how CLJS works:: {{#full-output?}}Full output mode{{/full-output?}}{{^full-output?}}Skeleton mode{{/full-output?}}"
   :dependencies [[cheshire "5.8.1"]
                  [clj-http "3.9.1"]
@@ -41,7 +41,7 @@
 
   ;; Compilation
   :aot :all
-  :uberjar-name "cljs-demo.jar"
+  :uberjar-name "{{name}}.jar"
   :main clj.handler
 
   ;; Partial setup for interactive development
@@ -55,7 +55,7 @@
    {
     :dev {:source-paths ["src/cljs"]
           :figwheel {:open-urls [{{#full-output?}}"http://localhost:3449/example"{{/full-output?}}]}
-          :compiler {:main {{#full-output?}}cljs_demo.example{{/full-output?}}
+          :compiler {:main {{#full-output?}} {{sanitized}}.example{{/full-output?}}
                      :asset-path "js/{{#full-output?}}compiled/out{{/full-output?}}"
                      :output-to "resources/public/js/{{#full-output?}}compiled/example.js{{/full-output?}}"
                      :output-dir "resources/public/js/{{#full-output?}}compiled/out{{/full-output?}}"
