@@ -27,9 +27,14 @@
                  [sablono "0.7.4"]
                  ]
 
-  :plugins {{#full-output?}}[[lein-figwheel "0.5.18"]
-                             [lein-cljsbuild "1.1.7"]]{{/full-output?}}{{^full-output?}}[]{{/full-output?}}
-
+  :plugins [{{#full-output?}}[lein-figwheel "0.5.18"]
+            [lein-cljsbuild "1.1.7"]{{/full-output?}}
+            {{^full-output?}}_
+            _{{/full-output?}}
+            [lein-ancient "0.6.15"]
+            [lein-bikeshed "0.5.2"]
+            [lein-kibit "0.1.6"]
+            [lein-ring "0.12.5"]]
 
   ;; Used to make this compatible with Java 11
   :managed-dependencies [[org.clojure/core.rrb-vector "0.0.13"]
@@ -55,7 +60,7 @@
    {
     :dev {:source-paths ["src/cljs"]
           :figwheel {:open-urls [{{#full-output?}}"http://localhost:3449/example"{{/full-output?}}]}
-          :compiler {:main {{#full-output?}} {{sanitized}}.example{{/full-output?}}
+          :compiler {:main {{#full-output?}}{{sanitized}}.example{{/full-output?}}
                      :asset-path "js/{{#full-output?}}compiled/out{{/full-output?}}"
                      :output-to "resources/public/js/{{#full-output?}}compiled/example.js{{/full-output?}}"
                      :output-dir "resources/public/js/{{#full-output?}}compiled/out{{/full-output?}}"
@@ -63,38 +68,33 @@
                      :npm-deps {{#full-output?}}{:capitalize "2.0.0"}{{/full-output?}}
                      :install-deps true}}
 
+    {{#full-output?}}
     :reframe {:source-paths ["src/cljs_reframe"]
               :figwheel {:open-urls ["http://localhost:3449/reframe"]
                          :on-jsload "cljs_reframe.core/main"}
-              :compiler {:main {{#full-output?}}cljs_reframe.core{{/full-output?}}
+              :compiler {:main cljs_reframe.core
                          :asset-path "js/{{#full-output?}}compiled/out_cljs_reframe{{/full-output?}}"
                          :output-to
                          "resources/public/js/{{#full-output?}}compiled/cljs_reframe.js{{/full-output?}}"
                          :output-dir
                          "resources/public/js/{{#full-output?}}compiled/out_cljs_reframe{{/full-output?}}"
                          :source-map true
-                         :source-map-timestamp true}}}
+                         :source-map-timestamp true}}{{/full-output?}}}
 
    }
 
   ;; Profiles - handy for switching between CLJS projects
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.10"]
                                   {{#full-output?}}[figwheel-sidecar "0.5.18"]
-                                  [cider/piggieback "0.4.1"]{{/full-output?}}]
+                                  [cider/piggieback "0.4.1"]{{/full-output?}}{{^full-output?}}_
+                                  _{{/full-output?}}]
                    :source-paths ["src/cljs"]
                    :repl-options {:nrepl-middleware
-                                  [{{#full-output?}}cider.piggieback/wrap-cljs-repl{{/full-output?}}]}
-                   :plugins [[lein-ancient "0.6.15"]
-                             [lein-bikeshed "0.5.2"]
-                             [lein-kibit "0.1.6"]
-                             [lein-ring "0.12.5"]]}
-             :reframe {:dependencies [[binaryage/devtools "0.9.10"]
-                                      {{#full-output?}}[figwheel-sidecar "0.5.18"]
-                                      [cider/piggieback "0.4.1"]{{/full-output?}}]
-                       :source-paths ["src/cljs_reframe"]
-                       :repl-options {:nrepl-middleware
-                                      [{{#full-output?}}cider.piggieback/wrap-cljs-repl{{/full-output?}}]}
-                       :plugins [[lein-ancient "0.6.15"]
-                                 [lein-bikeshed "0.5.2"]
-                                 [lein-kibit "0.1.6"]
-                                 [lein-ring "0.12.5"]]}})
+                                  [{{#full-output?}}cider.piggieback/wrap-cljs-repl{{/full-output?}}]}}
+
+             {{#full-output?}} :reframe {:dependencies [[binaryage/devtools "0.9.10"]
+                                                        [figwheel-sidecar "0.5.18"]
+                                                        [cider/piggieback "0.4.1"]]
+                                         :source-paths ["src/cljs_reframe"]
+                                         :repl-options {:nrepl-middleware
+                                                        [cider.piggieback/wrap-cljs-repl]}}{{/full-output?}}})
