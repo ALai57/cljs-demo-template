@@ -12,103 +12,82 @@
 
 
 {{#full-output?}}
-(def table-data (reagent/atom ^{:key :asdf} []))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Table formatting
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Clojurepalooza Instructions!
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; We will be making the game snake in today's Clojurepalooza
 
-(defn format-status [s]
-  (if (= s "HEALTHY")
-    {:style {:background "lightgreen"}}
-    {:style {:background "lightpink"}}))
+;; Here is a template that you can follow - see how much of the game you
+;; can code up in this session!
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Plaid dashboard
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn error-handler [{:keys [status status-text]}]
-  (.log js/console
-        (str "something bad happened: " status " " status-text)))
-
-(defn render-dashboard [response]
-  (reset! table-data response))
-
-(GET "/mock-data"
-     {:handler render-dashboard
-      :error-handler error-handler})
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Prototyping
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(def app-state (reagent/atom {:sort-val :Name :ascending true}))
-
-(defn update-sort-value [new-val]
-  (if (= new-val (:sort-val @app-state))
-    (swap! app-state update-in [:ascending] not)
-    (swap! app-state assoc :ascending true))
-  (swap! app-state assoc :sort-val new-val))
-
-(defn sorted-contents []
-  (let [sorted-contents (sort-by (:sort-val @app-state) @table-data)]
-    (if (:ascending @app-state)
-      sorted-contents
-      (rseq sorted-contents))))
-
-(defn column-header [w k n]
-  [:th.text-center
-   (conj w {:on-click #(update-sort-value k)}) n])
-
-(defn table-entry [options k data]
-  [:td.text-center
-   options (k data)])
-
-(defn table []
-  [:div.container
-   [:table.table.table-sm.table-striped
-    {:style {:width "800px"}}
-    [:tr.d
-     (column-header {} :name "Name")
-     (column-header {} :status "Status")
-     (column-header {} :error_institution "Institution Error")
-     (column-header {} :error_plaid "Plaid Error")
-     (column-header {} :success "Success")
-     (column-header {} :last_status_change "Last Status Change")]
-    [:tbody
-     (for [person (sorted-contents)]
-       ^{:key (:id person)}
-       [:tr.d
-        (table-entry (conj {:width "30%"}
-                           {:style {:font-weight "bold"}}) :name person)
-        (table-entry (conj {:width "10%"}
-                           (format-status (:status person))) :status person)
-        (table-entry {:width "10%"} :error_institution person)
-        (table-entry {:width "10%"} :error_plaid person)
-        (table-entry {:width "10%"} :success person)
-        (table-entry {:width "30%"} :last_status_change person)])]]])
-{{/full-output?}}
-
-{{^full-output?}}
-(defn table []
-  [:div.container
-   [:table.table.table-sm.table-striped
-    [:tr.d
-     [:th.text-center "Name"]
-     [:th.text-center "Role"]
-     [:th.text-center ""]]
-    [:tbody
-     [:tr.d
-      [:td.text-entry "Andrew!"]
-      [:td.text-entry "Software Engineer"]]]]])
-{{/full-output?}}
+(defn dot []
+  ;; 1) Fill me in to make a dot on the screen!
+  ;; 2) Make your dot send an alert when you click on it
+  ;; 3) Count the number of clicks on the dot, and display the total count in top right hand corner of the screen
+  ;; 4) Listen for keypresses - w,a,s,d
+  ;; 5) Make the dot move up, down when you click a key
+  ;; 6) Make the dot move left, right when you click a key
+  ;; 7) Set up a grid
+  )
 
 (defn main []
-  (reagent/render [table]
+  (reagent/render [dot]
                   (.getElementById js/document "app")))
 
 (main)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Some useful examples
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Example of how to make a DOM element
+;; [:div.myclass [:p "My paragraph text]]
+
+;; Example of how to format a DOM element
+;; [:div {:style {:width "800px"}}]
+
+;; Styles you'll need to make a small dot on the screen
+;; {:width FILLMEIN
+;;  :height FILLMEIN
+;;  :background-color FILLMEIN
+;;  :position "absolute"}
+
+;; Example of how to store application data
+;; This works exactly like a clojure atom (reset!, swap!)
+;; (def n-clicks (reagent/atom 0))
+
+;; How to add an onClick handler
+;; [:div {:onClick (fn [x] (js/alert "Hello!"))}]
+
+;; How to add a keypress listener - be careful -- you might end up adding multiple at once!
+;;    note: the listener is a function that takes a single argument
+;;          if you want to "see" the argument, you can use
+;;           (.log js/console event)
+;;          and to see its methods, use
+;;           (js-keys event)
+;; (def add-keypress-listener
+;;   (js/document.addEventListener "keypress"
+;;                                 (fn [event] (let [k (.-key event)]))))
+
+
+{{/full-output?}}
+
+{{^full-output?}}
+(defn table []
+[:div.container
+ [:table.table.table-sm.table-striped
+  [:tr.d
+   [:th.text-center "Name"]
+   [:th.text-center "Role"]
+   [:th.text-center ""]]
+  [:tbody
+   [:tr.d
+    [:td.text-entry "Andrew!"]
+    [:td.text-entry "Software Engineer"]]]]])
+(defn main []
+(reagent/render [table]
+                (.getElementById js/document "app")))
+
+(main)
+
+{{/full-output?}}

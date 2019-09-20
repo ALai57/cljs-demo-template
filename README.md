@@ -33,3 +33,29 @@ Public License, v. 2.0 are satisfied: GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or (at your
 option) any later version, with the GNU Classpath Exception which is available
 at https://www.gnu.org/software/classpath/license.html.
+
+
+
+# Learning objectives:
+
+Configure CLJS project build  
+1)	What is CLJS?  
+2)	Configure build :cljsbuild  
+3)	Build with lein cljsbuild once dev  
+4)	Tour the output files and directory  
+
+Setup example.html to run the JS  
+1)	Edit the example.html file  
+2)	Move example.js to same folder as example.html  
+
+Setup Figwheel to serve app  
+5)	Configure handler piece  
+6)	Configure Piggieback  
+7)	Get the app up and running  
+
+Tour the JS file, talk about react  
+1)	Hiccup syntax – this is just JS  
+2)	Change it and watch it in real time!  
+3)	Add on click behavior that sorts the data and re-renders the table  
+4)	Add a circle  
+5)	Add on click behavior that moves the circle  
